@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#090812" />
+<title>ECLIPSE | Gaming Community</title>
+<style>
+  :root {
+    --bg: #090812;
+    --panel: rgba(22, 19, 39, .78);
+    --purple: #9b5cff;
+    --violet: #6d42e8;
+    --cyan: #65e7ff;
+    --text: #f6f2ff;
+    --muted: #aaa4c2;
+    --line: rgba(185, 153, 255, .18);
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0; color: var(--text); background: var(--bg);
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: ""; position: fixed; inset: 0; pointer-events: none; z-index: -2;
+    background:
+      radial-gradient(ellipse at 75% 14%, rgba(111, 55, 220, .22), transparent 35%),
+      radial-gradient(ellipse at 15% 70%, rgba(40, 113, 180, .12), transparent 34%),
+      linear-gradient(180deg, #0b0916 0%, #090812 60%, #0c0917 100%);
+  }
+  .stars { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .6;
+    background-image: radial-gradient(1px 1px at 10% 20%, #fff 50%, transparent 100%),
+      radial-gradient(1px 1px at 80% 30%, #bda4ff 50%, transparent 100%),
+      radial-gradient(2px 2px at 40% 70%, #fff 50%, transparent 100%),
+      radial-gradient(1px 1px at 65% 85%, #8deaff 50%, transparent 100%),
+      radial-gradient(1px 1px at 92% 68%, #fff 50%, transparent 100%);
+  }
+  a { color: inherit; text-decoration: none; }
+  .nav {
+    width: min(1120px, calc(100% - 40px)); margin: auto; height: 82px;
+    display: flex; align-items: center; justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,.06);
+  }
+  .brand { display: flex; gap: 11px; align-items: center; font-weight: 900; letter-spacing: .18em; }
+  .brand-mark { width: 34px; height: 34px; border-radius: 50%; position: relative;
+    background: linear-gradient(135deg, #d9c3ff, #7d43ed 55%, #39206e);
+    box-shadow: 0 0 24px #8b4cff66;
+  }
+  .brand-mark::after { content:""; position:absolute; width:25px; height:25px; border-radius:50%;
+    background:#0b0916; top:2px; left:10px; }
+  .navlinks { display:flex; gap:30px; color:var(--muted); font-size:14px; }
+  .navlinks a:hover { color:white; }
+  .nav-cta, .button {
+    display:inline-flex; align-items:center; justify-content:center; gap:9px;
+    border:1px solid rgba(199,169,255,.35); border-radius:10px; padding:12px 17px;
+    font-weight:750; font-size:14px; transition:.2s ease; cursor:pointer;
+  }
+  .nav-cta { background:rgba(133,78,255,.12); }
+  .button.primary { background:linear-gradient(135deg, #a66aff, #6d43e7); border-color:transparent;
+    box-shadow:0 8px 32px rgba(111,65,230,.25); }
+  .button.secondary { background:rgba(255,255,255,.035); }
+  .button:hover, .nav-cta:hover { transform:translateY(-2px); box-shadow:0 10px 32px #8b4cff33; }
+  .hero { width:min(1120px, calc(100% - 40px)); margin:auto; min-height:620px;
+    display:grid; grid-template-columns:1.1fr .9fr; align-items:center; gap:35px; padding:60px 0 75px; }
+  .eyebrow { display:inline-flex; align-items:center; gap:9px; color:#d5c3ff; font-size:12px;
+    letter-spacing:.18em; text-transform:uppercase; font-weight:800; }
+  .pulse { width:7px; height:7px; border-radius:50%; background:#8bffca; box-shadow:0 0 12px #8bffca; }
+  h1 { font-size:clamp(58px, 8vw, 104px); line-height:.92; letter-spacing:-.075em; margin:23px 0 20px; }
+  h1 span { display:block; color:transparent; -webkit-text-stroke:1px #c6a8ff; text-shadow:0 0 40px #8b4cff25; }
+  .hero p { max-width:510px; color:var(--muted); font-size:17px; line-height:1.8; margin:0 0 28px; }
+  .actions { display:flex; gap:12px; flex-wrap:wrap; }
+  .tiny-note { color:#77718f; font-size:12px; margin-top:20px; }
+  .orb-wrap { min-height:390px; display:grid; place-items:center; position:relative; }
+  .orb { width:min(360px, 75vw); aspect-ratio:1; border-radius:50%; position:relative;
+    background:radial-gradient(circle at 35% 28%, #d8c8ff 0, #8f5aff 12%, #49228b 34%, #151027 60%, #090812 72%);
+    box-shadow:inset -22px -20px 50px #0009, inset 12px 10px 45px #c6a5ff55, 0 0 90px #7b3eff33;
+    animation:float 6s ease-in-out infinite; }
+  .orb::before { content:""; position:absolute; inset:16% -12%; border:2px solid #b79aff88;
+    border-radius:50%; transform:rotate(-22deg); box-shadow:0 0 22px #965bff44; }
+  .orb::after { content:""; position:absolute; inset:28% -18%; border:1px solid #68e6ff66;
+    border-radius:50%; transform:rotate(38deg); }
+  .orbit { position:absolute; width:12px; height:12px; border-radius:50%; background:#b7f5ff;
+    box-shadow:0 0 22px #65e7ff; top:19%; right:16%; }
+  .orbit-label { position:absolute; bottom:8%; right:4%; padding:12px 15px; border:1px solid var(--line);
+    background:#100d20cc; backdrop-filter:blur(12px); border-radius:12px; color:#d7d0eb; font-size:12px; }
+  .orbit-label strong { display:block; color:white; font-size:14px; margin-bottom:3px; }
+  .section { width:min(1120px, calc(100% - 40px)); margin:0 auto; padding:55px 0 75px; }
+  .section-head { display:flex; justify-content:space-between; align-items:end; gap:25px; margin-bottom:25px; }
+  .kicker { color:#b69aff; text-transform:uppercase; letter-spacing:.18em; font-size:11px; font-weight:800; }
+  h2 { margin:9px 0 0; font-size:clamp(28px, 4vw, 42px); letter-spacing:-.045em; }
+  .section-head p { color:var(--muted); max-width:390px; line-height:1.7; margin:0; font-size:14px; }
+  .cards { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
+  .card { border:1px solid var(--line); background:linear-gradient(145deg, rgba(28,23,48,.82), rgba(13,11,24,.8));
+    border-radius:17px; padding:25px; min-height:205px; transition:.2s; }
+  .card:hover { transform:translateY(-4px); border-color:#9b72e966; }
+  .card-icon { width:43px; height:43px; border-radius:13px; display:grid; place-items:center;
+    background:rgba(155,92,255,.14); color:#c7aaff; font-size:21px; margin-bottom:22px; }
+  .card h3 { margin:0 0 9px; font-size:18px; }
+  .card p { color:var(--muted); font-size:14px; line-height:1.7; margin:0; }
+  .community { border:1px solid rgba(171,132,255,.28); border-radius:22px; padding:38px;
+    background:radial-gradient(ellipse at 90% 0%, #6e40a833, transparent 45%), #141024b8;
+    display:flex; align-items:center; justify-content:space-between; gap:30px; }
+  .community p { color:var(--muted); line-height:1.7; max-width:540px; margin:12px 0 0; }
+  .discord-icon { font-size:33px; margin-bottom:12px; }
+  footer { width:min(1120px, calc(100% - 40px)); margin:auto; border-top:1px solid rgba(255,255,255,.07);
+    padding:25px 0 35px; color:#77718f; display:flex; justify-content:space-between; gap:15px; font-size:12px; }
+  footer strong { color:#c9c0e3; letter-spacing:.14em; }
+  @keyframes float { 0%,100% { transform:translateY(0) rotate(-4deg); } 50% { transform:translateY(-13px) rotate(2deg); } }
+  @media (max-width:760px) {
+    .nav { height:70px; } .navlinks { display:none; }
+    .hero { grid-template-columns:1fr; padding-top:65px; text-align:center; }
+    .hero p { margin-left:auto; margin-right:auto; } .actions { justify-content:center; }
+    .orb-wrap { min-height:310px; } .orb { width:260px; }
+    .section-head { display:block; } .section-head p { margin-top:14px; }
+    .cards { grid-template-columns:1fr; } .card { min-height:0; }
+    .community { padding:27px; flex-direction:column; align-items:flex-start; }
+    footer { flex-direction:column; }
+  }
+</style>
+</head>
+<body>
+<div class="stars"></div>
+<header class="nav">
+  <a class="brand" href="#home" aria-label="Eclipse home"><span class="brand-mark"></span><span>ECLIPSE</span></a>
+  <nav class="navlinks"><a href="#about">About</a><a href="#games">Gaming</a><a href="#community">Community</a></nav>
+  <a class="nav-cta" href="#community">Join the Discord ↗</a>
+</header>
+
+<main>
+  <section class="hero" id="home">
+    <div>
+      <div class="eyebrow"><span class="pulse"></span> A community beyond the ordinary</div>
+      <h1>ENTER THE <span>ECLIPSE.</span></h1>
+      <p>Your next gaming era starts here. Find your people, share the wins, build the squad, and stay locked in with the Eclipse community.</p>
+      <div class="actions">
+        <a class="button primary" href="#community">✦ Join our Discord <span>↗</span></a>
+        <a class="button secondary" href="#games">Explore Eclipse ↓</a>
+      </div>
+      <div class="tiny-note">GAMES • COMMUNITY • GOOD VIBES</div>
+    </div>
+    <div class="orb-wrap" aria-label="Glowing purple eclipse artwork">
+      <div class="orb"><span class="orbit"></span></div>
+      <div class="orbit-label"><strong>YOUR SQUAD AWAITS</strong>Find your place in the orbit.</div>
+    </div>
+  </section>
+
+  <section class="section" id="about">
+    <div class="section-head">
+      <div><div class="kicker">The Eclipse experience</div><h2>More than just a game.</h2></div>
+      <p>A home base for players who want to connect, compete, and make every session count.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><div class="card-icon">⌁</div><h3>Find Your Squad</h3><p>Meet players, team up, and turn random queues into regular sessions.</p></article>
+      <article class="card"><div class="card-icon">◈</div><h3>Gaming, Your Way</h3><p>From casual runs to sweaty sessions, there’s room for your playstyle.</p></article>
+      <article class="card"><div class="card-icon">✦</div><h3>Stay Connected</h3><p>Join the Discord to catch updates, chat with the community, and be part of what’s next.</p></article>
+    </div>
+  </section>
+
+  <section class="section" id="games">
+    <div class="section-head">
+      <div><div class="kicker">Choose your arena</div><h2>What are we playing?</h2></div>
+      <p>Make this your gaming hub. Add your main games, events, clips, or community highlights here.</p>
+    </div>
+    <div class="cards">
+      <article class="card"><div class="card-icon">🎮</div><h3>Gaming Hub</h3><p>Your place for game nights, party-ups, and finding people to play with.</p></article>
+      <article class="card"><div class="card-icon">⚡</div><h3>Community Events</h3><p>Set up tournaments, challenges, or casual events with your crew.</p></article>
+      <article class="card"><div class="card-icon">🌙</div><h3>Eclipse Updates</h3><p>Keep an eye out for announcements, new plans, and what’s coming next.</p></article>
+    </div>
+  </section>
+
+  <section class="section" id="community">
+    <div class="community">
+      <div>
+        <div class="discord-icon">◉</div>
+        <div class="kicker">The community is calling</div>
+        <h2>Meet us on Discord.</h2>
+        <p>Pull up, say hi, and find your next gaming squad. The Eclipse community is one click away.</p>
+      </div>
+      <!-- Replace YOUR_DISCORD_INVITE with your invite code or full invite URL. -->
+      <a class="button primary" href="https://discord.gg/YOUR_DISCORD_INVITE" target="_blank" rel="noopener noreferrer">Join the server ↗</a>
+    </div>
+  </section>
+</main>
+
+<footer><strong>ECLIPSE</strong><span>Built for the players. Made for the community.</span><span>© <span id="year"></span> Eclipse</span></footer>
+<script>
+  document.getElementById("year").textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
